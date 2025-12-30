@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext" /* 現代 Node.js 支援最新的 JS 特性 */,
+    "module": "NodeNext" /* 確保與 Node.js 的 ESM/CommonJS 模組解析一致 */,
+    "moduleResolution": "NodeNext",
+    "rootDir": "./src" /* 原始碼位置 */,
+    "outDir": "./dist" /* 編譯後的輸出位置 */,
+    "strict": true /* 開啟所有嚴格檢查，這是一年經驗工程師的基本功 */,
+    "esModuleInterop": true /* 讓 import 舊版 CommonJS 套件更順手 */,
+    "skipLibCheck": true /* 跳過 node_modules 裡的型別檢查，加速開發 */,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true /* 允許你直接 import .json 檔案 */
+  },
+  "include": ["src/**/*"] /* 只包含 src 目錄下的檔案 */,
+  "exclude": ["node_modules"] /* 排除 node_modules */
+}
