@@ -1,32 +1,44 @@
-import fs from "fs";
-
-import path from "path";
-
 import dotenv from "dotenv";
+import fs from "fs";
+import path from "path";
+import readline from "readline";
 
 import { downLoadImage } from "./utils/downLoadImage.js";
 
-// 載入環境變數
+// 載入 .env 檔案
 dotenv.config();
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+const imageBaseUrl = process.env.IMAGE_COVER_URL;
+if (!imageBaseUrl) {
+  console.error("錯誤：IMAGE_COVER_URL 環境變數未設定");
+  process.exit(1);
+}
+
+const askId = () => {
+  return new Promise<string>((resolve) => {
+    rl.question("請輸入號碼: ", (answer) => {
+      rl.close();
+      resolve(answer.trim());
+    });
+  });
+};
 
 const main = async () => {
   console.log("程式開始執行...");
-
-  const convertedId = (process.env.ID || "")
+  const inputId = await askId();
+  const convertedId = inputId
     .toLowerCase()
     .replace("-", "")
     .replace(/([a-z]+)([0-9]+)/, (_match, p1, p2) => {
       return p1 + p2.padStart(5, "0");
     });
 
-  const imageBaseUrl = process.env.IMAGE_COVER_URL;
-  if (!imageBaseUrl) {
-    console.error("錯誤：IMAGE_COVER_URL 環境變數未設定");
-    process.exit(1);
-  }
-
   const coverImgUrl = `${imageBaseUrl}/${convertedId}/${convertedId}pl.jpg`;
-
   const saveDir = "./dist";
 
   console.log("圖片 URL:", coverImgUrl);
